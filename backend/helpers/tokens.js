@@ -5,3 +5,7 @@ exports.generateToken = (payload, expired) => {
     expiresIn: expired,
   })
 }
+
+exports.verifyToken = (payload) => {
+  return jwt.verify(payload, process.env.TOKEN_SECRET)
+}

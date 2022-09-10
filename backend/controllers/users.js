@@ -5,7 +5,7 @@ const {
 } = require('../helpers/validation')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const { generateToken } = require('../helpers/tokens')
+const { generateToken, verifyToken } = require('../helpers/tokens')
 const { sendVerificationEmail } = require('../helpers/mailer')
 exports.register = async (req, res) => {
   try {
@@ -89,9 +89,60 @@ exports.register = async (req, res) => {
       verified: user.verified,
       message: 'Register Success! Please activate your email',
     })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
-    res.json(user)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
+exports.activateAccount = async (req, res) => {
+  try {
+    const { token } = req.params
+    const user = verifyToken(token)
+    const userExists = await User.findById(user.id)
+    if (userExists.verified) {
+      return res
+        .status(400)
+        .json({ message: 'This email is already activated' })
+    } else {
+      await User.findByIdAndUpdate(user.id, { verified: true })
+      return res.status(200).json({ message: 'Account activated. Thank you!' })
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const user = await User.findOne({ email })
+    if (!user) {
+      return res.status(400).json({ message: "Email doesn't exist" })
+    }
+
+    const checkPassword = await bcrypt.compare(password, user.password)
+    if (!checkPassword) {
+      return res
+        .status(400)
+        .json({ message: 'The password you’ve entered is incorrect.' })
+    }
+
+    if (!user.verified) {
+      return res.status(400).json({ message: 'Please verify your email.' })
+    }
+
+    const token = generateToken({ id: user._id.toString() }, '7d')
+    res.send({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      token: token,
+      verified: user.verified,
+      message: 'Login Success! Enjoy',
+    })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
 }
