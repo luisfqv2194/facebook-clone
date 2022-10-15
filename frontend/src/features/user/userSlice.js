@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import Cookies from 'js-cookie'
 export const userSlice = createSlice({
   name: 'user',
-  initialState: null,
+  initialState: Cookies.get('User') ? JSON.parse(Cookies.get('User')) : null,
   reducers: {
     login: (state, action) => {
       return action.payload
