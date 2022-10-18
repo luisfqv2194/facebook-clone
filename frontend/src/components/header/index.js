@@ -1,17 +1,25 @@
 import { Link } from 'react-router-dom'
 import {
+  ArrowDown,
   Friends,
   Gaming,
   HomeActive,
   Logo,
   Market,
+  Menu,
+  Messenger,
+  Notifications,
   Search,
   Watch,
 } from '../../svg'
 import './style.css'
-
+import { useSelector } from 'react-redux'
+import SearchMenu from './SearchMenu'
+import { useState } from 'react'
 const Header = () => {
+  const { user } = useSelector((user) => ({ ...user }))
   const color = '#65676b'
+  const [showSearchMenu, setShowSearchMenu] = useState(false)
   return (
     <header>
       <div className='header_left'>
@@ -20,7 +28,12 @@ const Header = () => {
             <Logo />
           </div>
         </Link>
-        <div className='search search1'>
+        <div
+          className='search search1'
+          onClick={() => {
+            setShowSearchMenu(true)
+          }}
+        >
           <Search color={color} />
           <input
             type={'text'}
@@ -29,6 +42,12 @@ const Header = () => {
           ></input>
         </div>
       </div>
+      {showSearchMenu && (
+        <SearchMenu
+          color={color}
+          setShowSearchMenu={setShowSearchMenu}
+        ></SearchMenu>
+      )}
       <div className='header_middle'>
         <Link to='/' className='middle_icon active'>
           <HomeActive />
@@ -47,7 +66,25 @@ const Header = () => {
           <Gaming color={color} />
         </Link>
       </div>
-      <div className='header_right'></div>
+      <div className='header_right'>
+        <Link to={'/profile'} className='profile_link hover1'>
+          <img src={user?.picture} alt='' className='src' />
+          <span>{user?.first_name}</span>
+        </Link>
+        <div className='circle_icon hover1'>
+          <Menu />
+        </div>
+        <div className='circle_icon hover1'>
+          <Messenger />
+        </div>
+        <div className='circle_icon hover1'>
+          <Notifications />
+          <div className='right_notification'>3</div>
+        </div>
+        <div className='circle_icon hover1'>
+          <ArrowDown />
+        </div>
+      </div>
     </header>
   )
 }
