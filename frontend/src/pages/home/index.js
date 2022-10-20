@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div>
       <Header />
-      {visible && <div className='card' ref={el}></div>}
+      {/* {visible && <div className='card' ref={el}></div>} */}
     </div>
   )
 }
