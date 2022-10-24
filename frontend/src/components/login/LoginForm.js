@@ -40,7 +40,7 @@ export default function LoginForm({ setVisible }) {
           password,
         }
       )
-      dispatch({ type: 'LOGIN', payload: data })
+      dispatch({ type: 'user/login', payload: data })
       Cookies.set('user', JSON.stringify(data))
       navigate('/')
     } catch (error) {
