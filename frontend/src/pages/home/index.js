@@ -3,19 +3,19 @@ import { useSelector } from 'react-redux'
 import { ref } from 'yup'
 import Header from '../../components/header'
 import LeftHome from '../../components/home/left'
-import useClickOutside from '../../helpers/clickOutside'
-
+import RightHome from '../../components/home/right'
+import Stories from '../../components/home/stories'
+import './style.css'
 const Home = () => {
-  const [visible, setVisible] = useState(true)
   const { user } = useSelector((user) => ({ ...user }))
-  const el = useRef(null)
-  useClickOutside(el, () => {
-    setVisible(false)
-  })
   return (
-    <div>
+    <div className='home'>
       <Header />
       <LeftHome user={user} />
+      <div className='home_middle'>
+        <Stories />
+      </div>
+      <RightHome user={user} />
     </div>
   )
 }
