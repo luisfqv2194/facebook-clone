@@ -7,6 +7,9 @@ export const userSlice = createSlice({
     login: (state, action) => {
       return action.payload
     },
+    verify: (state, action) => {
+      return { ...state, verified: action.payload }
+    },
   },
 })
 

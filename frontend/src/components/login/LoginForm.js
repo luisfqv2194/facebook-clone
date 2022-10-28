@@ -34,7 +34,7 @@ export default function LoginForm({ setVisible }) {
     try {
       setLoading(true)
       const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/login`,
+        `${process.env.REACT_APP_BACKEND_URL}/login`,
         {
           email,
           password,

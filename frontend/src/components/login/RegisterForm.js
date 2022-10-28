@@ -87,7 +87,7 @@ const RegisterForm = ({ setVisible }) => {
     console.log(process.env.REACT_APP_BACKEND_URL)
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/register`,
+        `${process.env.REACT_APP_BACKEND_URL}/register`,
         { ...user }
       )
       setError('')
