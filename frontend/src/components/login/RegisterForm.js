@@ -94,7 +94,7 @@ const RegisterForm = ({ setVisible }) => {
       setSuccess(data.message)
       setTimeout(() => {
         dispatch(login(data))
-        Cookies.set('User', JSON.stringify(data))
+        Cookies.set('user', JSON.stringify(data))
         navigate('/')
       }, 2000)
     } catch (error) {

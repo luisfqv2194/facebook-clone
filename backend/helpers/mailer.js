@@ -11,6 +11,7 @@ exports.sendVerificationEmail = (email, name, url) => {
   auth.setCredentials({
     refresh_token: MAILING_REFRESH,
   })
+  console.log('URL: ', url)
   const accessToken = auth.getAccessToken()
   const stmp = nodemailer.createTransport({
     service: 'gmail',
