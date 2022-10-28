@@ -1,5 +1,11 @@
 const express = require('express')
-const { register, activateAccount, login } = require('../controllers/users')
+const {
+  register,
+  activateAccount,
+  login,
+  auth,
+} = require('../controllers/users')
+const { authUser } = require('../middlewares/auth')
 const router = express.Router()
 
 router.post('/register', register)
