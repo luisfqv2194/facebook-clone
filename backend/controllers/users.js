@@ -96,7 +96,7 @@ exports.register = async (req, res) => {
 
 exports.activateAccount = async (req, res) => {
   try {
-    const { token } = req.params
+    const { token } = req.body
     const user = verifyToken(token)
     const userExists = await User.findById(user.id)
     if (userExists.verified) {

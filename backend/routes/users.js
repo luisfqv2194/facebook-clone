@@ -9,7 +9,7 @@ const { authUser } = require('../middlewares/auth')
 const router = express.Router()
 
 router.post('/register', register)
-router.patch('/activate/:token', activateAccount)
+router.patch('/activate', activateAccount)
 router.post('/login', login)
 
 module.exports = router
