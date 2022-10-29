@@ -96,9 +96,16 @@ exports.register = async (req, res) => {
 
 exports.activateAccount = async (req, res) => {
   try {
+    const validUser = req.user.id
     const { token } = req.body
     const user = verifyToken(token)
     const userExists = await User.findById(user.id)
+
+    if (validUser !== user.id) {
+      return res.status(400).json({
+        message: "You don't have the authorization to complete this operation.",
+      })
+    }
     if (userExists.verified) {
       return res
         .status(400)
