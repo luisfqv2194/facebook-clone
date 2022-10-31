@@ -14,7 +14,7 @@ export default function Reset() {
   const { user } = useSelector((state) => ({ ...state }))
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [visible, setVisible] = useState(0)
+  const [visible, setVisible] = useState(3)
   const [email, setEmail] = useState('')
   const [code, setCode] = useState('')
   const [password, setPassword] = useState('')
