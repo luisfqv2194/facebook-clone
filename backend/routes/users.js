@@ -6,6 +6,8 @@ const {
   auth,
   sendVerification,
   findUser,
+  sendResetPasswordCode,
+  validateResetCode,
 } = require('../controllers/users')
 const { authUser } = require('../middlewares/auth')
 const router = express.Router()
@@ -15,5 +17,7 @@ router.patch('/activate', authUser, activateAccount)
 router.post('/login', login)
 router.post('/sendVerification', authUser, sendVerification)
 router.post('/findUser', findUser)
+router.post('/sendResetPasswordCode', sendResetPasswordCode)
+router.post('/validateResetCode', validateResetCode)
 
 module.exports = router
