@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 export const uploadImages = async (formData, path, token) => {
   try {
@@ -8,12 +8,11 @@ export const uploadImages = async (formData, path, token) => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "content-type": "multipart/form-data",
         },
       }
-    );
-    return data;
+    )
+    return data
   } catch (error) {
-    return error.response.data.message;
+    return error.response.data.message
   }
-};
+}
