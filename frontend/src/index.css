@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 html {
   overflow-y: scroll;
@@ -28,7 +28,6 @@ a {
   --dark-color-secondary: #b0b3b8;
   --blue-color: #1876f2;
   --green-color: #42b72a;
-  --error-red-color: #b94a48;
   --light-blue-color: #e7f3ff;
   --border-color: #ccced2;
   --shadow-1: rgba(0, 0, 0, 0.2);
@@ -76,10 +75,12 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background: rgba(255, 255, 255, 0.768);
+  bottom: 0;
   z-index: 99;
 }
+
+/*----Buttons----*/
 
 /*-----Hovers-----*/
 .hover1:hover {
@@ -88,12 +89,10 @@ a {
 .hover2:hover {
   background: var(--bg-third);
 }
-
 .hover3:hover {
   background: #d4d6da3a;
 }
 /*-----Hovers-----*/
-
 .card {
   height: 500px;
   width: 500px;
