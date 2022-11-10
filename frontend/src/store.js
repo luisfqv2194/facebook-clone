@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './features/user/userSlice'
 import postsReducer from './features/posts/postsSlice'
 import profileReducer from './features/profile/profileSlice'
+import photosReducer from './features/photos/photosSlice'
 // import {
 //   persistStore,
 //   persistReducer,
@@ -27,6 +28,7 @@ export const store = configureStore({
     user: userReducer,
     posts: postsReducer,
     profile: profileReducer,
+    photos: photosReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({
