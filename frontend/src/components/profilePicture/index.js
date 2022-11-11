@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import './style.css'
 import UpdateProfilePicture from './UpdateProfilePicture'
 import useOnClickOutside from '../../helpers/clickOutside'
-export default function ProfilePicture({ username, setShow, pRef }) {
+export default function ProfilePicture({ username, setShow, pRef, photos }) {
   const popup = useRef(null)
   // useOnClickOutside(popup, () => setShow(false))
   const refInput = useRef(null)

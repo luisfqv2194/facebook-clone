@@ -13,6 +13,9 @@ export const userSlice = createSlice({
     verify: (state, action) => {
       return { ...state, verified: action.payload }
     },
+    update_picture: (state, action) => {
+      return { ...state, picture: action.payload }
+    },
   },
 })
 
