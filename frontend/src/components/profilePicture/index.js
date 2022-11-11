@@ -2,8 +2,10 @@ import { useRef, useState } from 'react'
 import './style.css'
 import UpdateProfilePicture from './UpdateProfilePicture'
 import useOnClickOutside from '../../helpers/clickOutside'
+import { useSelector } from 'react-redux'
 export default function ProfilePicture({ username, setShow, pRef, photos }) {
   const popup = useRef(null)
+  const { user } = useSelector((state) => ({ ...state }))
   // useOnClickOutside(popup, () => setShow(false))
   const refInput = useRef(null)
   const [image, setImage] = useState('')
@@ -68,7 +70,38 @@ export default function ProfilePicture({ username, setShow, pRef, photos }) {
             </button>
           </div>
         )}
-        <div className='old_pictures_wrap'></div>
+        <div className='old_pictures_wrap scrollbar'>
+          <h4>your profile pictures</h4>
+          <div className='old_pictures'>
+            {photos
+              .filter(
+                (img) => img.folder === `${user.username}/profile_pictures`
+              )
+              .map((photo) => (
+                <img
+                  src={photo.secure_url}
+                  key={photo.public_id}
+                  alt=''
+                  onClick={() => setImage(photo.secure_url)}
+                />
+              ))}
+          </div>
+          <h4>other pictures</h4>
+          <div className='old_pictures'>
+            {photos
+              .filter(
+                (img) => img.folder !== `${user.username}/profile_pictures`
+              )
+              .map((photo) => (
+                <img
+                  src={photo.secure_url}
+                  key={photo.public_id}
+                  alt=''
+                  onClick={() => setImage(photo.secure_url)}
+                />
+              ))}
+          </div>
+        </div>
       </div>
       {image && (
         <UpdateProfilePicture
