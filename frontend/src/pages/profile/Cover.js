@@ -11,7 +11,7 @@ import OldCovers from './OldCovers'
 
 export default function Cover({ cover, visitor, photos }) {
   const [showCoverMneu, setShowCoverMenu] = useState(false)
-  const [coverPicture, setCoverPicture] = useState('')
+  const [coverPicture, setCoverPicture] = useState()
   const [currentCover, setCurrentCover] = useState('')
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
@@ -172,9 +172,7 @@ export default function Cover({ cover, visitor, photos }) {
           />
         </div>
       )}
-      {coverPicture === '' ? (
-        <img src={currentCover} className='cover' alt='' />
-      ) : null}
+      {!coverPicture && <img src={currentCover} className='cover' alt='' />}
 
       {!visitor && (
         <div className='udpate_cover_wrapper'>
