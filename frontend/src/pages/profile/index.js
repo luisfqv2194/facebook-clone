@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../components/header'
 import './style.css'
 import Cover from './Cover'
-import ProfielPictureInfos from './ProfielPictureInfos'
+import ProfilePictureInfos from './ProfilePictureInfos'
 import ProfileMenu from './ProfileMenu'
 import PplYouMayKnow from './PplYouMayKnow'
 import CreatePost from '../../components/createPost'
@@ -60,7 +60,7 @@ export default function Profile({ setVisible }) {
       <div className='profile_top'>
         <div className='profile_container'>
           <Cover cover={profile.cover} visitor={visitor} />
-          <ProfielPictureInfos profile={profile.profile} visitor={visitor} />
+          <ProfilePictureInfos profile={profile.profile} visitor={visitor} />
           <ProfileMenu />
         </div>
       </div>
