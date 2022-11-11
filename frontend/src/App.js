@@ -35,9 +35,6 @@ function App() {
   const { posts } = useSelector((state) => ({
     ...state,
   }))
-  useEffect(() => {
-    getAllPosts()
-  }, [])
   const getAllPosts = async () => {
     try {
       dispatch({
@@ -62,7 +59,10 @@ function App() {
       })
     }
   }
-  // console.log(nana, loading, error)
+  useEffect(() => {
+    getAllPosts()
+  }, [])
+
   return (
     <div>
       {visible && <CreatePostPopup user={user} setVisible={setVisible} />}

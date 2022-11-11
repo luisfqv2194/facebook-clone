@@ -10,6 +10,7 @@ const {
   validateResetCode,
   changePassword,
   getProfile,
+  updateProfilePicture,
 } = require('../controllers/users')
 const { authUser } = require('../middlewares/auth')
 const router = express.Router()
@@ -23,5 +24,5 @@ router.post('/sendResetPasswordCode', sendResetPasswordCode)
 router.post('/validateResetCode', validateResetCode)
 router.post('/changePassword', changePassword)
 router.get('/getProfile/:username', getProfile)
-
+router.put('/updateProfilePicture', authUser, updateProfilePicture)
 module.exports = router
