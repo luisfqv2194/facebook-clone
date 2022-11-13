@@ -83,6 +83,7 @@ export default function Intro({ detailss, visitor }) {
           max={max}
           handleChange={handleChange}
           setShowBio={setShowBio}
+          setShow={setShowBio}
           updateDetails={updateDetails}
           placeholder='Add Bio'
           name='bio'

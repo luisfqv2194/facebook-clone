@@ -42,7 +42,7 @@ export default function Bio({
         <div className='flex flex_right'>
           <button
             className='gray_btn'
-            onClick={() => (!detail ? setShowBio(false) : setShowBio(false))}
+            onClick={() => (!detail ? setShow(false) : setShow(false))}
           >
             Cancel
           </button>
@@ -50,7 +50,7 @@ export default function Bio({
             className='blue_btn'
             onClick={() => {
               updateDetails()
-              setShowBio(false)
+              setShow(false)
             }}
           >
             Save
