@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../components/header'
@@ -14,27 +14,50 @@ import Post from '../../components/post'
 import Photos from './Photos'
 import Friends from './Friends'
 import Intro from '../../components/intro'
+import { useMediaQuery } from 'react-responsive'
+
 export default function Profile({ setVisible }) {
   const { username } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { user } = useSelector((state) => ({ ...state }))
   const [photos, setPhotos] = useState({})
+  const profileTop = useRef(null)
+  const leftSide = useRef(null)
+  const [height, setHeight] = useState()
+  const [leftHeight, setLeftHeight] = useState()
+  const [scrollHeight, setScrollHeight] = useState()
+  const [othername, setOthername] = useState()
   var userName = username === undefined ? user.username : username
+  let visitor = userName === user.username ? false : true
   const { profile } = useSelector((state) => ({
     ...state,
   }))
-  const [othername, setOthername] = useState()
+
   const path = `${userName}/*`
   const max = 30
   const sort = 'desc'
+
   useEffect(() => {
     getProfile()
   }, [userName])
   useEffect(() => {
     setOthername(profile.profile?.details?.otherName)
   }, [profile])
-  let visitor = userName === user.username ? false : true
+  useEffect(() => {
+    setHeight(profileTop.current.clientHeight + 300)
+    setLeftHeight(leftSide.current.clientHeight)
+    window.addEventListener('scroll', getScroll, { passive: true })
+    return () => {
+      window.addEventListener('scroll', getScroll, { passive: true })
+    }
+  }, [profile.loading, scrollHeight])
+  const check = useMediaQuery({
+    query: '(min-width:901px)',
+  })
+  const getScroll = () => {
+    setScrollHeight(window.pageYOffset)
+  }
 
   const getProfile = async () => {
     try {
@@ -81,7 +104,7 @@ export default function Profile({ setVisible }) {
   return (
     <div className='profile'>
       <Header page='profile' />
-      <div className='profile_top'>
+      <div className='profile_top' ref={profileTop}>
         <div className='profile_container'>
           <Cover
             cover={profile.profile.cover}
@@ -101,8 +124,17 @@ export default function Profile({ setVisible }) {
         <div className='profile_container'>
           <div className='bottom_container'>
             <PplYouMayKnow />
-            <div className='profile_grid'>
-              <div className='profile_left'>
+            <div
+              className={`profile_grid ${
+                check && scrollHeight >= height && leftHeight > 1000
+                  ? 'scrollFixed showLess'
+                  : check &&
+                    scrollHeight >= height &&
+                    leftHeight < 1000 &&
+                    'scrollFixed showMore'
+              }`}
+            >
+              <div className='profile_left' ref={leftSide}>
                 <Intro
                   detailss={profile.profile.details}
                   visitor={visitor}
