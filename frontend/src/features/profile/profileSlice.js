@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import Cookies from 'js-cookie'
 export const profileSlice = createSlice({
   name: 'profile',
-  initialState: { profile: [], loading: true, error: '' },
+  initialState: { profile: {}, loading: true, error: '' },
   reducers: {
     profile_request: (state, action) => {
       return { ...state }

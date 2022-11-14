@@ -24,13 +24,18 @@ export default function Profile({ setVisible }) {
   const { profile } = useSelector((state) => ({
     ...state,
   }))
+  const [othername, setOthername] = useState()
   const path = `${userName}/*`
   const max = 30
   const sort = 'desc'
   useEffect(() => {
     getProfile()
   }, [userName])
+  useEffect(() => {
+    setOthername(profile.profile?.details?.otherName)
+  }, [profile])
   let visitor = userName === user.username ? false : true
+
   const getProfile = async () => {
     try {
       dispatch({
@@ -87,6 +92,7 @@ export default function Profile({ setVisible }) {
             profile={profile.profile}
             visitor={visitor}
             photos={photos.resources}
+            othername={othername}
           />
           <ProfileMenu />
         </div>
@@ -97,7 +103,11 @@ export default function Profile({ setVisible }) {
             <PplYouMayKnow />
             <div className='profile_grid'>
               <div className='profile_left'>
-                <Intro detailss={profile.profile.details} visitor={visitor} />
+                <Intro
+                  detailss={profile.profile.details}
+                  visitor={visitor}
+                  setOthername={setOthername}
+                />
                 <Photos
                   username={userName}
                   token={user.token}
