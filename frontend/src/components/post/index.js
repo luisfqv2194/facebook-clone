@@ -3,35 +3,71 @@ import './style.css'
 import Moment from 'react-moment'
 import { Dots, Public } from '../../svg'
 import ReactsPopup from './ReactsPopup'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CreateComment from './CreateComment'
 import PostMenu from './PostMenu'
-import { getReacts, reactPost } from '../../functions/post'
+import { comment, getReacts, reactPost } from '../../functions/post'
+import Comment from './Comment'
 export default function Post({ post, user, profile }) {
   const [visible, setVisible] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [reacts, setReacts] = useState()
   const [check, setCheck] = useState()
+  const [total, setTotal] = useState(0)
+  const [count, setCount] = useState(1)
+  const [checkSaved, setCheckSaved] = useState()
+  const [comments, setComments] = useState([])
   useEffect(() => {
     getPostReacts()
+  }, [post])
+  useEffect(() => {
+    setComments(post?.comments)
   }, [post])
 
   const getPostReacts = async () => {
     const res = await getReacts(post._id, user.token)
     setReacts(res.reacts)
     setCheck(res.check)
+    setTotal(res.total)
+    setCheckSaved(res.checkSaved)
   }
 
   const reactHandler = async (type) => {
     reactPost(post._id, type, user.token)
     if (check == type) {
       setCheck()
+      let index = reacts.findIndex((x) => x.react == check)
+      if (index !== -1) {
+        setReacts([...reacts, (reacts[index].count = --reacts[index].count)])
+        setTotal((prev) => --prev)
+      }
     } else {
       setCheck(type)
+      let index = reacts.findIndex((x) => x.react == type)
+      let index1 = reacts.findIndex((x) => x.react == check)
+      if (index !== -1) {
+        setReacts([...reacts, (reacts[index].count = ++reacts[index].count)])
+        setTotal((prev) => ++prev)
+        console.log(reacts)
+      }
+      if (index1 !== -1) {
+        setReacts([...reacts, (reacts[index1].count = --reacts[index1].count)])
+        setTotal((prev) => --prev)
+        console.log(reacts)
+      }
     }
   }
+  const showMore = () => {
+    setCount((prev) => prev + 3)
+  }
+  const postRef = useRef(null)
+
   return (
-    <div className='post' style={{ width: `${profile && '100%'}` }}>
+    <div
+      className='post'
+      style={{ width: `${profile && '100%'}` }}
+      ref={postRef}
+    >
       <div className='post_header'>
         <Link
           to={`/profile/${post.user.username}`}
@@ -121,11 +157,28 @@ export default function Post({ post, user, profile }) {
 
       <div className='post_infos'>
         <div className='reacts_count'>
-          <div className='reacts_count_imgs'></div>
-          <div className='reacts_count_num'></div>
+          <div className='reacts_count_imgs'>
+            {reacts &&
+              reacts
+                .sort((a, b) => {
+                  return b.count - a.count
+                })
+                .slice(0, 3)
+                .map(
+                  (react, i) =>
+                    react.count > 0 && (
+                      <img
+                        src={`../../../reacts/${react.react}.svg`}
+                        alt=''
+                        key={i}
+                      />
+                    )
+                )}
+          </div>
+          <div className='reacts_count_num'>{total > 0 && total}</div>
         </div>
         <div className='to_right'>
-          <div className='comments_count'>13 comments</div>
+          <div className='comments_count'>{comments.length} comments</div>
           <div className='share_count'>1 share</div>
         </div>
       </div>
@@ -195,7 +248,24 @@ export default function Post({ post, user, profile }) {
       </div>
       <div className='comments_wrap'>
         <div className='comments_order'></div>
-        <CreateComment user={user} />
+        <CreateComment
+          user={user}
+          postId={post._id}
+          setComments={setComments}
+          setCount={setCount}
+        />
+        {comments &&
+          [...comments]
+            .sort((a, b) => {
+              return new Date(b.commentAt) - new Date(a.commentAt)
+            })
+            .slice(0, count)
+            .map((comment, i) => <Comment comment={comment} key={i} />)}
+        {count < comments.length && (
+          <div className='view_comments' onClick={() => showMore()}>
+            View more comments
+          </div>
+        )}
       </div>
       {showMenu && (
         <PostMenu
@@ -203,6 +273,12 @@ export default function Post({ post, user, profile }) {
           postUserId={post.user._id}
           imagesLength={post?.images?.length}
           setShowMenu={setShowMenu}
+          postId={post._id}
+          token={user.token}
+          checkSaved={checkSaved}
+          setCheckSaved={setCheckSaved}
+          images={post.images}
+          postRef={postRef}
         />
       )}
     </div>

@@ -8,13 +8,13 @@ import Stories from '../../components/home/stories'
 import SendVerification from '../../components/home/sendVerification'
 import Post from '../../components/post'
 import './style.css'
-export default function Home({ setVisible, posts }) {
+export default function Home({ setVisible, posts, loading }) {
   const { user } = useSelector((user) => ({ ...user }))
   const middle = useRef(null)
   const [height, setHeight] = useState()
   useEffect(() => {
     setHeight(middle.current.clientHeight)
-  }, [])
+  }, [loading, height])
   return (
     <div className='home' style={{ height: `${height + 150}px` }}>
       <Header page='home' />

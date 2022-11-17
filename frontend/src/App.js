@@ -80,7 +80,13 @@ function App() {
           />
           <Route
             path='/'
-            element={<Home setVisible={setVisible} posts={posts.posts} />}
+            element={
+              <Home
+                setVisible={setVisible}
+                posts={posts.posts}
+                loading={posts.loading}
+              />
+            }
             exact
           />
           <Route path='/activate/:token' element={<Activate />} exact />
