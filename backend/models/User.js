@@ -131,7 +131,7 @@ const userSchema = mongoose.Schema(
         type: String,
       },
     },
-    savedPost: [
+    savedPosts: [
       {
         post: {
           type: ObjectId,

@@ -66,7 +66,7 @@ exports.savePost = async (req, res) => {
   try {
     const postId = req.params.id
     const user = await User.findById(req.user.id)
-    const check = user?.savedPosts.find(
+    const check = user.savedPosts?.find(
       (post) => post.post.toString() == postId
     )
     if (check) {
