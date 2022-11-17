@@ -15,6 +15,13 @@ export const profileSlice = createSlice({
         error: '',
       }
     },
+    profile_posts: (state, action) => {
+      return {
+        loading: false,
+        profile: { ...state.profile, posts: action.payload },
+        error: '',
+      }
+    },
     profile_error: (state, action) => {
       return { ...state, loading: false, error: action.payload }
     },

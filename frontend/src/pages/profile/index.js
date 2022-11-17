@@ -15,8 +15,10 @@ import Photos from './Photos'
 import Friends from './Friends'
 import Intro from '../../components/intro'
 import { useMediaQuery } from 'react-responsive'
+import CreatePostPopup from '../../components/createPostPopup'
 
-export default function Profile({ setVisible }) {
+export default function Profile({ getAllPosts }) {
+  const [visible, setVisible] = useState(false)
   const { username } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -37,27 +39,6 @@ export default function Profile({ setVisible }) {
   const path = `${userName}/*`
   const max = 30
   const sort = 'desc'
-
-  useEffect(() => {
-    getProfile()
-  }, [userName])
-  useEffect(() => {
-    setOthername(profile.profile?.details?.otherName)
-  }, [profile])
-  useEffect(() => {
-    setHeight(profileTop.current.clientHeight + 300)
-    setLeftHeight(leftSide.current.clientHeight)
-    window.addEventListener('scroll', getScroll, { passive: true })
-    return () => {
-      window.addEventListener('scroll', getScroll, { passive: true })
-    }
-  }, [profile.loading, scrollHeight])
-  const check = useMediaQuery({
-    query: '(min-width:901px)',
-  })
-  const getScroll = () => {
-    setScrollHeight(window.pageYOffset)
-  }
 
   const getProfile = async () => {
     try {
@@ -101,9 +82,40 @@ export default function Profile({ setVisible }) {
       })
     }
   }
+
+  useEffect(() => {
+    getProfile()
+  }, [userName])
+  useEffect(() => {
+    setOthername(profile.profile?.details?.otherName)
+  }, [profile])
+  useEffect(() => {
+    setHeight(profileTop.current.clientHeight + 300)
+    setLeftHeight(leftSide.current.clientHeight)
+    window.addEventListener('scroll', getScroll, { passive: true })
+    return () => {
+      window.addEventListener('scroll', getScroll, { passive: true })
+    }
+  }, [profile.loading, scrollHeight])
+  const check = useMediaQuery({
+    query: '(min-width:901px)',
+  })
+  const getScroll = () => {
+    setScrollHeight(window.pageYOffset)
+  }
+
   return (
     <div className='profile'>
-      <Header page='profile' />
+      {visible && (
+        <CreatePostPopup
+          user={user}
+          setVisible={setVisible}
+          posts={profile.profile?.posts}
+          dispatch={dispatch}
+          profile={profile.profile}
+        />
+      )}
+      <Header page='profile' getAllPosts={getAllPosts} />
       <div className='profile_top' ref={profileTop}>
         <div className='profile_container'>
           <Cover

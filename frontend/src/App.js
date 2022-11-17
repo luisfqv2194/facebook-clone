@@ -10,24 +10,6 @@ import CreatePostPopup from './components/createPostPopup'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-// function reducer(state, action) {
-//   switch (action.type) {
-//     case 'POSTS_REQUEST':
-//       return { ...state, loading: true, error: '' }
-//     case 'POSTS_SUCCESS':
-//       return {
-//         ...state,
-//         loading: false,
-//         posts: action.payload,
-//         error: '',
-//       }
-//     case 'POSTS_ERROR':
-//       return { ...state, loading: false, error: action.payload }
-
-//     default:
-//       return state
-//   }
-// }
 function App() {
   const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
@@ -65,7 +47,14 @@ function App() {
 
   return (
     <div>
-      {visible && <CreatePostPopup user={user} setVisible={setVisible} />}
+      {visible && (
+        <CreatePostPopup
+          user={user}
+          setVisible={setVisible}
+          posts={posts.posts}
+          dispatch={dispatch}
+        />
+      )}
       <Routes>
         <Route element={<LoggedInRoutes />}>
           <Route
