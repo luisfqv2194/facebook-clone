@@ -3,6 +3,7 @@ import userReducer from './features/user/userSlice'
 import postsReducer from './features/posts/postsSlice'
 import profileReducer from './features/profile/profileSlice'
 import photosReducer from './features/photos/photosSlice'
+import friendsReducer from './features/friends/friendsSlice'
 // import {
 //   persistStore,
 //   persistReducer,
@@ -29,6 +30,7 @@ export const store = configureStore({
     posts: postsReducer,
     profile: profileReducer,
     photos: photosReducer,
+    friends: friendsReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

@@ -5,6 +5,7 @@ import Home from './pages/home'
 import LoggedInRoutes from './routes/LoggedInRoutes'
 import NotLoggedInRoutes from './routes/NotLoggedInRoutes'
 import Activate from './pages/home/activate'
+import Friends from './pages/friends/'
 import Reset from './pages/reset'
 import CreatePostPopup from './components/createPostPopup'
 import { useSelector, useDispatch } from 'react-redux'
@@ -65,6 +66,11 @@ function App() {
           <Route
             path='/profile/:username'
             element={<Profile setVisible={setVisible} />}
+            exact
+          />
+          <Route
+            path='/friends'
+            element={<Friends setVisible={setVisible} />}
             exact
           />
           <Route
