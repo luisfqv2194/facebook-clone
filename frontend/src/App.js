@@ -14,10 +14,10 @@ import axios from 'axios'
 function App() {
   const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => ({ ...state }))
-  const { posts } = useSelector((state) => ({
-    ...state,
-  }))
+  const { user, posts, darkTheme } = useSelector((state) => ({ ...state }))
+  // const { posts } = useSelector((state) => ({
+  //   ...state,
+  // }))
   const getAllPosts = async () => {
     try {
       dispatch({
@@ -47,7 +47,7 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className={darkTheme ? 'dark' : ''}>
       {visible && (
         <CreatePostPopup
           user={user}

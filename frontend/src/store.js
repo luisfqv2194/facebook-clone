@@ -4,6 +4,7 @@ import postsReducer from './features/posts/postsSlice'
 import profileReducer from './features/profile/profileSlice'
 import photosReducer from './features/photos/photosSlice'
 import friendsReducer from './features/friends/friendsSlice'
+import darkThemeReducer from './features/darkTheme/darkThemeSlice.js'
 // import {
 //   persistStore,
 //   persistReducer,
@@ -31,6 +32,7 @@ export const store = configureStore({
     profile: profileReducer,
     photos: photosReducer,
     friends: friendsReducer,
+    darkTheme: darkThemeReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({
