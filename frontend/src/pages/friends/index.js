@@ -16,9 +16,9 @@ export default function Friends() {
     dispatch({ type: 'friends/friends_request' })
     const data = await getFriendsPageInfos(user.token)
     if (data.status === 'ok') {
-      dispatch({ type: 'friends/friends_success', payload: friends.friends })
+      dispatch({ type: 'friends/friends_success', payload: data.data.friends })
     } else {
-      dispatch({ type: 'friends/friends_error', payload: friends.friends })
+      dispatch({ type: 'friends/friends_error', payload: data.data.friends })
     }
   }
   console.log(friends)
