@@ -74,6 +74,11 @@ function App() {
             exact
           />
           <Route
+            path='/friends/:type'
+            element={<Friends setVisible={setVisible} />}
+            exact
+          />
+          <Route
             path='/'
             element={
               <Home
