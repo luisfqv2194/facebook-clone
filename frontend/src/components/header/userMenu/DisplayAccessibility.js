@@ -40,7 +40,7 @@ export default function DisplayAccessibility({ setVisible }) {
         {darkTheme ? (
           <input type='radio' name='dark' id='darkOff' />
         ) : (
-          <input type='radio' name='dark' id='darkOff' checked />
+          <input type='radio' name='dark' id='darkOff' checked readOnly />
         )}
       </label>
       <label
@@ -53,7 +53,7 @@ export default function DisplayAccessibility({ setVisible }) {
       >
         <span>On</span>
         {darkTheme ? (
-          <input type='radio' name='dark' id='darkOn' checked />
+          <input type='radio' name='dark' id='darkOn' checked readOnly />
         ) : (
           <input type='radio' name='dark' id='darkOn' />
         )}
