@@ -43,7 +43,7 @@ function App() {
     }
   }
   useEffect(() => {
-    getAllPosts()
+    if (user) getAllPosts()
   }, [])
 
   return (
