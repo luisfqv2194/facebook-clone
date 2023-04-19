@@ -13,7 +13,9 @@ export default function Home({ setVisible, posts, loading }) {
   const middle = useRef(null)
   const [height, setHeight] = useState()
   useEffect(() => {
-    setHeight(middle.current.clientHeight)
+    if (middle.current.clientHeight > height) {
+      setHeight(middle.current.clientHeight)
+    }
   }, [loading, height])
   return (
     <div className='home' style={{ height: `${height + 150}px` }}>
