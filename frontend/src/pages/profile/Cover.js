@@ -77,10 +77,6 @@ export default function Cover({ cover, visitor, photos }) {
     setCurrentCover(cover)
   }, [cover])
 
-  useEffect(() => {
-    setCurrentCover(cover)
-  }, [cover])
-
   const updateCoverPicture = async () => {
     try {
       setLoading(true)
@@ -102,7 +98,7 @@ export default function Cover({ cover, visitor, photos }) {
           user.token
         )
         console.log(new_post)
-        if (new_post === 'ok') {
+        if (new_post.status === 'ok') {
           setLoading(false)
           setCoverPicture('')
           setCurrentCover(res[0].url)
