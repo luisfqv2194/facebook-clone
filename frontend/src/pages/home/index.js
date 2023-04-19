@@ -11,14 +11,9 @@ import './style.css'
 export default function Home({ setVisible, posts, loading }) {
   const { user } = useSelector((user) => ({ ...user }))
   const middle = useRef(null)
-  const [height, setHeight] = useState()
-  useEffect(() => {
-    if (middle.current.clientHeight > height) {
-      setHeight(middle.current.clientHeight)
-    }
-  }, [loading, height])
+  const [height, setHeight] = useState(0)
   return (
-    <div className='home' style={{ height: `${height + 150}px` }}>
+    <div className='home' style={{ height: `${height}px` }}>
       <Header page='home' />
       <LeftHome user={user} />
       <div className='home_middle' ref={middle}>
@@ -27,7 +22,14 @@ export default function Home({ setVisible, posts, loading }) {
         <CreatePost user={user} setVisible={setVisible} />
         <div className='posts'>
           {posts.map((post) => (
-            <Post key={post._id} post={post} user={user} />
+            <Post
+              key={post._id}
+              post={post}
+              user={user}
+              setHeight={() => {
+                setHeight(middle.current.clientHeight + 100)
+              }}
+            />
           ))}
         </div>
       </div>

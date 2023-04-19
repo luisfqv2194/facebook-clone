@@ -8,7 +8,7 @@ import CreateComment from './CreateComment'
 import PostMenu from './PostMenu'
 import { comment, getReacts, reactPost } from '../../functions/post'
 import Comment from './Comment'
-export default function Post({ post, user, profile }) {
+export default function Post({ post, user, profile, setHeight }) {
   const [visible, setVisible] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [reacts, setReacts] = useState()
@@ -19,10 +19,13 @@ export default function Post({ post, user, profile }) {
   const [comments, setComments] = useState([])
   useEffect(() => {
     getPostReacts()
-  }, [post])
-  useEffect(() => {
     setComments(post?.comments)
+    setHeight()
   }, [post])
+
+  useEffect(() => {
+    setHeight()
+  }, [comments])
 
   const getPostReacts = async () => {
     const res = await getReacts(post._id, user.token)
