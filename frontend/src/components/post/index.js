@@ -20,11 +20,11 @@ export default function Post({ post, user, profile, setHeight }) {
   useEffect(() => {
     getPostReacts()
     setComments(post?.comments)
-    setHeight()
+    if (setHeight) setHeight()
   }, [post])
 
   useEffect(() => {
-    setHeight()
+    if (setHeight) setHeight()
   }, [comments])
 
   const getPostReacts = async () => {
